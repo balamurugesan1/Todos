@@ -1,4 +1,5 @@
 //package imports
+import 'package:Todos/common/AppTextStyles.dart';
 import 'package:Todos/common/Colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +19,7 @@ class NewTodo extends StatefulWidget {
 class _NewTodoState extends State<NewTodo> {
   final _titleController = TextEditingController();
   DateTime _selectedDate;
+  var themeColor = TodoProvider.isDarkModeOn;
 
   void _submitData() {
     final entertedTitle = _titleController.text;
@@ -57,16 +59,17 @@ class _NewTodoState extends State<NewTodo> {
         child: Column(
           children: [
             TextField(
-              cursorColor: AppColors.primaryColor,
+              style: TextStyle(color: Colors.white),
+              cursorColor: AppColors.lightBlueColor,
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                      borderSide: BorderSide(color: AppColors.primaryColor)),
+                      borderSide: BorderSide(color: AppColors.lightBlueColor)),
                   labelText: 'Todo',
-                  labelStyle: TextStyle(color: AppColors.primaryColor),
+                  labelStyle: TextStyle(color: AppColors.lightBlueColor),
                   prefixIcon: Icon(
                     Icons.edit,
-                    color: AppColors.primaryColor,
+                    color: AppColors.lightBlueColor,
                   )),
               controller: _titleController,
               onSubmitted: (_) => _submitData(),
@@ -80,8 +83,8 @@ class _NewTodoState extends State<NewTodo> {
                       _selectedDate == null
                           ? 'No Date Chosen!'
                           : 'Picked Date: ${DateFormat('yMd').format(_selectedDate)}',
-                      style: TextStyle(
-                          color: AppColors.primaryColor,
+                      style: AppTextStyle.regularStyle(
+                          color: AppColors.lightBlueColor,
                           fontSize: 14,
                           fontWeight: FontWeight.bold),
                     ),
@@ -93,10 +96,13 @@ class _NewTodoState extends State<NewTodo> {
                     color: AppColors.primaryColor,
                     child: Text(
                       'Choose Date',
-                      style: TextStyle(
-                        color: AppColors.lightBlueColor,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      // style: TextStyle(
+                      //   color: AppColors.lightBlueColor,
+                      //   fontWeight: FontWeight.bold,
+                      // ),
+                      style: AppTextStyle.semiBoldStyle(
+                          color: AppColors.lightBlueColor,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],
@@ -127,7 +133,11 @@ class _NewTodoState extends State<NewTodo> {
                     child: Center(
                       child: Text(
                         "Add Todo",
-                        style: TextStyle(
+                        // style: TextStyle(
+                        //     fontSize: 18,
+                        //     color: AppColors.lightBlueColor,
+                        //     fontWeight: FontWeight.bold),
+                        style: AppTextStyle.semiBoldStyle(
                             fontSize: 18,
                             color: AppColors.lightBlueColor,
                             fontWeight: FontWeight.bold),

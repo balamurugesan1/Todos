@@ -1,8 +1,12 @@
 //package imports
+import 'package:Todos/common/AppTextStyles.dart';
 import 'package:Todos/common/Colors.dart';
 import 'package:Todos/screens/BmiCalculator.dart';
 import 'package:Todos/screens/MathCalculator.dart';
+import 'package:Todos/screens/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +23,8 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
+final nickName = GetStorage();
 
 class _HomePageState extends State<HomePage> {
   final List<Todos> _userTodos = [];
@@ -43,7 +49,7 @@ class _HomePageState extends State<HomePage> {
 
   void _openModelBottomSheet(BuildContext ctx) {
     showModalBottomSheet(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xff28282B),
         barrierColor: Color(0xffcdc0d3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -68,45 +74,63 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: ListView(
+        child: Column(
           children: [
             DrawerHeader(
               child: Center(
-                  child: Text('Todos',
-                      style: TextStyle(
-                          color: AppColors.lightBlueColor, fontSize: 20.0))),
+                  child: Text("Hello ${nickName.read("nickname")} !",
+                      style: AppTextStyle.heading1Style(
+                          color: AppColors.lightBlueColor))),
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
               ),
             ),
+            Expanded(
+                child: Container(
+                    child: ListView(
+              children: [
+                ListTile(
+                  title: const Text('BMI Calculator'),
+                  subtitle: const Text('Soon'),
+                  leading: Icon(Icons.accessibility),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(BmiCalculator.routeName);
+                  },
+                ),
+                Divider(
+                  height: 10,
+                ),
+                ListTile(
+                  title: const Text('Calculator'),
+                  subtitle: const Text('Soon'),
+                  leading: const Icon(Icons.calculate),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(MathCalculator.routeName);
+                  },
+                ),
+                Divider(
+                  height: 10,
+                ),
+                ListTile(
+                  title: const Text('Birthday Reminder'),
+                  subtitle: const Text('Soon'),
+                  leading: Icon(Icons.wallet_giftcard),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(BmiCalculator.routeName);
+                  },
+                ),
+                Divider(
+                  height: 10,
+                ),
+              ],
+            ))),
             ListTile(
-              title: Text('BMI Calculator'),
-              subtitle: Text('Soon'),
-              leading: Icon(Icons.accessibility),
+              title: const Text('Edit Nickname'),
+              leading: Icon(Icons.edit),
               onTap: () {
-                Navigator.of(context).pushNamed(BmiCalculator.routeName);
-              },
-            ),
-            Divider(
-              height: 10,
-            ),
-            ListTile(
-              title: Text('Calculator'),
-              subtitle: Text('Soon'),
-              leading: Icon(Icons.calculate),
-              onTap: () {
-                Navigator.of(context).pushNamed(MathCalculator.routeName);
-              },
-            ),
-            Divider(
-              height: 10,
-            ),
-            ListTile(
-              title: Text('Birthday Reminder'),
-              subtitle: Text('Soon'),
-              leading: Icon(Icons.wallet_giftcard),
-              onTap: () {
-                Navigator.of(context).pushNamed(BmiCalculator.routeName);
+                nickName.write("isLogged", false);
+                nickName.remove('nickname');
+                Get.offAll(() => WelcomeScreen());
               },
             ),
             Divider(
@@ -127,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                 themeProvider.swapTheme();
               })
         ],
-        title: Text(
+        title: const Text(
           'Todos',
           style: TextStyle(color: Colors.white),
         ),

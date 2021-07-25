@@ -1,4 +1,6 @@
+import 'package:Todos/common/AppTextStyles.dart';
 import 'package:Todos/common/Colors.dart';
+import 'package:Todos/common/Dimens.dart';
 import 'package:flutter/material.dart';
 // import 'package:intl/intl.dart';
 import 'package:get/get.dart';
@@ -52,10 +54,7 @@ class _TodoListState extends State<TodoList> {
                 return todoProvider.todoListItems.isEmpty
                     ? Center(
                         child: Text('Add your Todo',
-                            style: TextStyle(
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30)))
+                            style: AppTextStyle.boldStyle(fontSize: 30)))
                     : ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
@@ -83,24 +82,26 @@ class _TodoListState extends State<TodoList> {
                                               ""
                                           ? '${todoProvider.todoListItems[index].title.substring(0, 1).toUpperCase()}'
                                           : "~",
-                                      style: TextStyle(
+                                      style: AppTextStyle.semiBoldStyle(
                                           color: AppColors.primaryColor,
-                                          fontSize: 25),
+                                          fontSize: Dimens.fontSize24),
                                     ),
                                   ),
                                 ),
                               ),
                               title: Text(
-                                todoProvider.todoListItems[index].title,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.lightBlueColor),
-                              ),
+                                  todoProvider.todoListItems[index].title,
+                                  style: AppTextStyle.semiBoldStyle(
+                                      color: AppColors.lightBlueColor,
+                                      fontSize: Dimens.fontSize18,
+                                      fontWeight: FontWeight.bold)),
                               subtitle: Text(
                                 '${todoProvider.todoListItems[index].date}',
                                 // DateFormat.yMd().format(todo[index].date),
-                                style:
-                                    TextStyle(color: AppColors.lightBlueColor),
+                                // style:
+                                //     TextStyle(color: AppColors.lightBlueColor),
+                                style: AppTextStyle.regularStyle(
+                                    color: AppColors.lightBlueColor),
                               ),
                               trailing: IconButton(
                                   icon: Icon(
