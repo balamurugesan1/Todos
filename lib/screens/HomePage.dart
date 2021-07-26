@@ -1,6 +1,7 @@
 //package imports
 import 'package:Todos/common/AppTextStyles.dart';
 import 'package:Todos/common/Colors.dart';
+
 import 'package:Todos/screens/BmiCalculator.dart';
 import 'package:Todos/screens/MathCalculator.dart';
 import 'package:Todos/screens/WelcomeScreen.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:Todos/providers/todo_provider.dart';
 
 //provider file imports
 import '../providers/todo_provider.dart';
@@ -25,6 +27,7 @@ class HomePage extends StatefulWidget {
 }
 
 final nickName = GetStorage();
+final ScrollController _scrollController = ScrollController();
 
 class _HomePageState extends State<HomePage> {
   final List<Todos> _userTodos = [];
@@ -140,6 +143,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
+        iconTheme: IconThemeData(color: AppColors.lightBlueColor),
         backgroundColor: AppColors.primaryColor,
         actions: [
           IconButton(
@@ -149,7 +153,61 @@ class _HomePageState extends State<HomePage> {
                 TodoProvider themeProvider =
                     Provider.of<TodoProvider>(context, listen: false);
                 themeProvider.swapTheme();
-              })
+              }),
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                  child: Row(
+                children: [
+                  Icon(
+                    Icons.delete,
+                    color: AppColors.lightBlueColor,
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Text("Delete")
+                ],
+              )),
+              PopupMenuItem(
+                  child: Row(
+                children: [
+                  Icon(
+                    Icons.share,
+                    color: AppColors.lightBlueColor,
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Text("Share")
+                ],
+              )),
+              PopupMenuItem(
+                  child: GestureDetector(
+                onTap: () {
+                  nickName.write("isLogged", false);
+                  nickName.remove('nickname');
+                  Get.to(() => WelcomeScreen());
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.edit,
+                      color: AppColors.lightBlueColor,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Text("Edit Name")
+                  ],
+                ),
+              ))
+            ],
+            child: Icon(
+              Icons.more_vert,
+              color: AppColors.lightBlueColor,
+            ),
+          )
         ],
         title: const Text(
           'Todos',
@@ -162,16 +220,47 @@ class _HomePageState extends State<HomePage> {
           children: [TodoList(_userTodos, _deleteTodo)],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          backgroundColor: AppColors.lightBlueColor,
-          child: Icon(
-            Icons.add,
-            color: AppColors.primaryColor,
-            size: 30.0,
-          ),
-          onPressed: () {
-            _openModelBottomSheet(context);
-          }),
+      // floatingActionButton: FloatingActionButton(
+      //     backgroundColor: AppColors.lightBlueColor,
+      //     child: Icon(
+      //       Icons.add,
+      //       color: AppColors.primaryColor,
+      //       size: 30.0,
+      //     ),
+      //     onPressed: () {
+      //       _openModelBottomSheet(context);
+      //     }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Container(
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            // FloatingActionButton(onPressed: () {
+            //   _scrollController.animateTo(
+            //       _scrollController.position.minScrollExtent,
+            //       duration: Duration(milliseconds: 500),
+            //       curve: Curves.fastOutSlowIn);
+            // }),
+            FloatingActionButton(
+                backgroundColor: AppColors.lightBlueColor,
+                child: Icon(
+                  Icons.add,
+                  color: AppColors.primaryColor,
+                  size: 30.0,
+                ),
+                onPressed: () {
+                  _openModelBottomSheet(context);
+                }),
+            // FloatingActionButton(onPressed: () {
+            //   _scrollController.animateTo(
+            //       _scrollController.position.maxScrollExtent,
+            //       duration: Duration(milliseconds: 500),
+            //       curve: Curves.fastOutSlowIn);
+            // })
+          ],
+        ),
+      ),
     );
   }
 }

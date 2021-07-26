@@ -17,72 +17,77 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     final nickNameController = TextEditingController();
     final nickData = GetStorage();
+    //final _formKey = GlobalKey<FormState>();
+
+    void getNickName() {
+        String nickName = nickNameController.text;
+        if (nickName != '') {
+          print('successful');
+          nickData.write('isLogged', true);
+          nickData.write('nickname', nickName);
+          Get.offAll(HomePage());
+        } else {
+          Get.snackbar("Error", "Please enter Nickname");
+        }
+    }
 
     return Scaffold(
       body: SafeArea(
           child: Center(
-        child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  TextField(
-                    cursorColor: AppColors.lightBlueColor,
-                    controller: nickNameController,
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      labelStyle: TextStyle(color: AppColors.lightBlueColor),
-                      disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide:
-                              BorderSide(color: AppColors.lightBlueColor)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide:
-                              BorderSide(color: AppColors.lightBlueColor)),
-                      labelText: 'Nickname',
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      String nickName = nickNameController.text;
-                      if (nickName != '') {
-                        print('successful');
-                        nickData.write('isLogged', true);
-                        nickData.write('nickname', nickName);
-                        Get.offAll(HomePage());
-                      } else {
-                        Get.snackbar("Error", "Please enter Nickname");
-                      }
-                    },
-                    child: Container(
-                      height: 55,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+        child: Form(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    TextField(
+                      cursorColor: AppColors.lightBlueColor,
+                      controller: nickNameController,
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color: AppColors.lightBlueColor),
+                        disabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                            borderSide:
+                                BorderSide(color: AppColors.lightBlueColor)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                            borderSide:
+                                BorderSide(color: AppColors.lightBlueColor)),
+                        labelText: 'Nickname',
                       ),
-                      child: Center(
-                        child: Text(
-                          "Save",
-                          // style: TextStyle(
-                          //     fontSize: 18,
-                          //     color: AppColors.lightBlueColor,
-                          //     fontWeight: FontWeight.bold),
-                          style: AppTextStyle.semiBoldStyle(
-                              fontSize: 18,
-                              color: AppColors.lightBlueColor,
-                              fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 20),
+                    GestureDetector(
+                      onTap: () {
+                        getNickName();
+                      },
+                      child: Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Save",
+                            style: AppTextStyle.semiBoldStyle(
+                                fontSize: 18,
+                                color: AppColors.lightBlueColor,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       )),
