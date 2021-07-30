@@ -54,7 +54,8 @@ class _TodoListState extends State<TodoList> {
                 return todoProvider.todoListItems.isEmpty
                     ? Center(
                         child: Text('Add your Todo',
-                            style: AppTextStyle.boldStyle(fontSize: 30)))
+                            style: AppTextStyle.boldStyle(fontSize: 30)),
+                      )
                     : ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,

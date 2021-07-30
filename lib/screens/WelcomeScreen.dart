@@ -17,21 +17,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     final nickNameController = TextEditingController();
     final nickData = GetStorage();
-    //final _formKey = GlobalKey<FormState>();
 
     void getNickName() {
-        String nickName = nickNameController.text;
-        if (nickName != '') {
-          print('successful');
-          nickData.write('isLogged', true);
-          nickData.write('nickname', nickName);
-          Get.offAll(HomePage());
-        } else {
-          Get.snackbar("Error", "Please enter Nickname");
-        }
+      String nickName = nickNameController.text;
+      if (nickName != '') {
+        print('successful');
+        nickData.write('isLogged', true);
+        nickData.write('nickname', nickName);
+        Get.to(() => HomePage());
+      } else {
+        Get.snackbar("Error", "Please enter Nickname");
+      }
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
           child: Center(
         child: Form(
@@ -43,22 +43,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: [
                 Column(
                   children: [
+                    Image.asset("assets/images/welcome-screen.png"),
                     TextField(
-                      cursorColor: AppColors.lightBlueColor,
+                      style: TextStyle(color: AppColors.primaryColor),
+                      cursorColor: AppColors.primaryColor,
                       controller: nickNameController,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        labelStyle: TextStyle(color: AppColors.lightBlueColor),
+                        labelStyle: TextStyle(color: AppColors.primaryColor),
                         disabledBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                                BorderSide(color: AppColors.lightBlueColor)),
+                                BorderSide(color: AppColors.primaryColor)),
                         enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(5.0)),
                             borderSide:
-                                BorderSide(color: AppColors.lightBlueColor)),
+                                BorderSide(color: AppColors.primaryColor)),
                         labelText: 'Nickname',
                       ),
                     ),
@@ -66,6 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     GestureDetector(
                       onTap: () {
                         getNickName();
+                        print("object");
                       },
                       child: Container(
                         height: 55,

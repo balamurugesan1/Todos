@@ -1,6 +1,7 @@
 //package imports
 import 'package:Todos/common/AppTextStyles.dart';
 import 'package:Todos/common/Colors.dart';
+import 'package:Todos/screens/BirthdayRemainder.dart';
 
 import 'package:Todos/screens/BmiCalculator.dart';
 import 'package:Todos/screens/MathCalculator.dart';
@@ -73,6 +74,19 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  // void _openEditName(BuildContext ctx) {
+  //   showModalBottomSheet(
+  //       context: ctx,
+  //       builder: (_) {
+  //         return Column(children: [
+  //           TextField(
+  //             decoration: InputDecoration(labelText: "Nick Name"),
+  //           ),
+  //           TextButton(onPressed: () {}, child: Text("Save"))
+  //         ]);
+  //       });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                   subtitle: const Text('Soon'),
                   leading: Icon(Icons.accessibility),
                   onTap: () {
-                    Navigator.of(context).pushNamed(BmiCalculator.routeName);
+                    Get.to(() => BmiCalculator());
                   },
                 ),
                 Divider(
@@ -108,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                   subtitle: const Text('Soon'),
                   leading: const Icon(Icons.calculate),
                   onTap: () {
-                    Navigator.of(context).pushNamed(MathCalculator.routeName);
+                    Get.to(() => MathCalculator());
                   },
                 ),
                 Divider(
@@ -119,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                   subtitle: const Text('Soon'),
                   leading: Icon(Icons.wallet_giftcard),
                   onTap: () {
-                    Navigator.of(context).pushNamed(BmiCalculator.routeName);
+                    Get.to(() => BirthdayRemainder());
                   },
                 ),
                 Divider(
@@ -154,60 +168,66 @@ class _HomePageState extends State<HomePage> {
                     Provider.of<TodoProvider>(context, listen: false);
                 themeProvider.swapTheme();
               }),
-          PopupMenuButton(
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                  child: Row(
-                children: [
-                  Icon(
-                    Icons.delete,
-                    color: AppColors.lightBlueColor,
-                  ),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  Text("Delete")
-                ],
-              )),
-              PopupMenuItem(
-                  child: Row(
-                children: [
-                  Icon(
-                    Icons.share,
-                    color: AppColors.lightBlueColor,
-                  ),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  Text("Share")
-                ],
-              )),
-              PopupMenuItem(
-                  child: GestureDetector(
-                onTap: () {
-                  nickName.write("isLogged", false);
-                  nickName.remove('nickname');
-                  Get.to(() => WelcomeScreen());
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.edit,
-                      color: AppColors.lightBlueColor,
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Text("Edit Name")
-                  ],
-                ),
-              ))
-            ],
-            child: Icon(
-              Icons.more_vert,
-              color: AppColors.lightBlueColor,
-            ),
-          )
+          // PopupMenuButton(
+          //   itemBuilder: (context) => [
+          //     PopupMenuItem(
+          //         child: Row(
+          //       children: [
+          //         Icon(
+          //           Icons.delete,
+          //           color: AppColors.lightBlueColor,
+          //         ),
+          //         const SizedBox(
+          //           width: 12,
+          //         ),
+          //         Text("Delete")
+          //       ],
+          //     )),
+          //     PopupMenuItem(
+          //         child: GestureDetector(
+          //       onTap: () {
+          //         _openEditName(context);
+          //       },
+          //       child: Row(
+          //         children: [
+          //           Icon(
+          //             Icons.share,
+          //             color: AppColors.lightBlueColor,
+          //           ),
+          //           const SizedBox(
+          //             width: 12,
+          //           ),
+          //           Text("Share")
+          //         ],
+          //       ),
+          //     )),
+          //     PopupMenuItem(
+          //         child: GestureDetector(
+          //       onTap: () {
+          //         nickName.write("isLogged", false);
+          //         nickName.remove('nickname');
+          //         Get.offAll(() => WelcomeScreen());
+          //         print("object");
+          //       },
+          //       child: Row(
+          //         children: [
+          //           Icon(
+          //             Icons.edit,
+          //             color: AppColors.lightBlueColor,
+          //           ),
+          //           const SizedBox(
+          //             width: 12,
+          //           ),
+          //           Text("Edit Name")
+          //         ],
+          //       ),
+          //     ))
+          //   ],
+          //   child: Icon(
+          //     Icons.more_vert,
+          //     color: AppColors.lightBlueColor,
+          //   ),
+          // )
         ],
         title: const Text(
           'Todos',

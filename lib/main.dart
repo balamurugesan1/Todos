@@ -76,7 +76,7 @@ class _InitialScreenState extends State<InitialScreen> {
 
   void loginCheck() {
     userLoggedInStatus.read("isLogged")
-        ? Get.offAll(HomePage())
-        : Get.offAll(WelcomeScreen());
+        ? Get.to(HomePage())
+        : Get.to(WelcomeScreen());
   }
 }
